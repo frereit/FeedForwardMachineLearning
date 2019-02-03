@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MachineLearning
 {
+    [Serializable]
     public class DotProductNotPossibleException : Exception
     {
         public DotProductNotPossibleException(){ }
@@ -15,6 +16,7 @@ namespace MachineLearning
         public DotProductNotPossibleException(string message, Exception inner) : base(message, inner) { }
     }
 
+    [Serializable]
     public class MatrixAdditionNotPossibleException : Exception
     {
         public MatrixAdditionNotPossibleException() { }

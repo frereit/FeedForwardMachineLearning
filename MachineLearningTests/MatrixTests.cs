@@ -27,11 +27,56 @@ namespace MachineLearning.Tests
             });
 
             Matrix m3 = new Matrix(5, 5);
-            Assert.AreEqual(m3[1,2], 0.0);
+            Assert.AreEqual(0.0, m3[1,2]);
 
-            Assert.AreEqual(m1.Rows, 2);
-            Assert.AreEqual(m1.Columns, 3);
-            Assert.AreEqual(m1[0,1], 2.0);
+            Assert.AreEqual(2, m1.Rows);
+            Assert.AreEqual(3, m1.Columns);
+            Assert.AreEqual(2.0, m1[0,1]);
+        }
+
+        [TestMethod()]
+        public void MatrixIsVectorTest()
+        {
+            Matrix m1 = new Matrix(new double[,]
+            {
+                {1.0, 2.0, 3.0, 4.0 }
+            });
+            Assert.IsTrue(m1.IsVector());
+
+            Matrix m2 = new Matrix(new double[,]
+            {
+                {5.0 },
+                {6.0 },
+                {7.0 },
+                {8.0 },
+            });
+            Assert.IsTrue(m2.IsVector());
+
+            Matrix m3 = new Matrix(new double[,]
+            {
+                {1.0, 2.0, 3.0},
+                {4.0, 5.0, 6.0},
+            });
+            Assert.IsFalse(m3.IsVector());
+        }
+
+        [TestMethod()]
+        public void MatrixDotProductTest()
+        {
+            Matrix m1 = new Matrix(new double[,]
+            {
+                {1.0, 2.0, 3.0, 4.0 }
+            });
+            Matrix m2 = new Matrix(new double[,]
+            {
+                {5.0 },
+                {6.0 },
+                {7.0 },
+                {8.0 },
+            });
+            double dotProductActual = m1.DotProduct(m2);
+            double dotProductExpected = 70;
+            Assert.AreEqual(dotProductExpected, dotProductActual);
         }
 
         [TestMethod()]
@@ -179,6 +224,53 @@ namespace MachineLearning.Tests
 
             Assert.IsFalse(m2.Equals(m3));
             Assert.IsTrue(m1.Equals(m2));
+        }
+
+        [TestMethod()]
+        public void MatrixGetRowTest()
+        {
+            Matrix m1 = new Matrix(new double[,]
+            {
+                {1.0, 2.0, 3.0 },
+                {4.0, 5.0, 6.0 }
+            });
+            Matrix m2 = new Matrix(new double[,]
+            {
+                {1.0, 2.0, 3.0 },
+            });
+
+            Matrix m3 = new Matrix(new double[,]
+{
+                {1.0, 2.0 },
+                {3.0, 4.0 },
+                {5.0, 6.0 },
+                {7.0, 8.0 },
+            });
+
+            Matrix m4 = new Matrix(new double[,]
+            {
+                {1.0, 2.0 }
+            });
+
+            Assert.IsTrue(m3.GetRow(0).Equals(m4));
+            Assert.IsTrue(m1.GetRow(0).Equals(m2));
+        }
+
+        [TestMethod()]
+        public void MatrixGetColumnTest()
+        {
+            Matrix m1 = new Matrix(new double[,]
+            {
+                {1.0, 2.0, 3.0 },
+                {4.0, 5.0, 6.0 }
+            });
+
+            Matrix m2 = new Matrix(new double[,]
+            {
+                {1.0 },
+                {4.0 },
+            });
+            Assert.IsTrue(m1.GetCol(0).Equals(m2));
         }
     }
 }

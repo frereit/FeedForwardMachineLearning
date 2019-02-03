@@ -81,8 +81,8 @@ namespace MachineLearning
             if(m1.Columns != m2.Rows)
             {
                 throw (new DotProductNotPossibleException("Column Count of Matrix 1 (" 
-                                                            + m1.Rows + ") does not match up with Row Count of Matrix 2 (" 
-                                                            + m2.Columns + ")."));
+                                                            + m1.Columns + ") does not match up with Row Count of Matrix 2 (" 
+                                                            + m2.Rows + ")."));
             }
             Matrix result = new Matrix(m1.Rows, m2.Columns);
             for(int m1Row = 0; m1Row < m1.Rows; m1Row++)
@@ -145,12 +145,12 @@ namespace MachineLearning
             return true;
         }
 
-        public static Matrix Identitiy(int size)
+        public static Matrix Identitiy(int pSize)
         {
-            Matrix identity = new Matrix(size, size);
-            for(int row = 0; row < size; row++)
+            Matrix identity = new Matrix(pSize, pSize);
+            for(int row = 0; row < pSize; row++)
             {
-                for(int col = 0; col < size; col++)
+                for(int col = 0; col < pSize; col++)
                 {
                     if(row == col)
                     {
@@ -161,6 +161,84 @@ namespace MachineLearning
             return identity;
         }
 
+        public static Matrix Random(int pRows, int pColumns)
+        {
+            return Matrix.Random(pRows, pColumns, -1.0, 1.0);
+        }
+
+        public static Matrix Random(int pRows, int pColumns, double pMin, double pMax)
+        {
+            Matrix rnd = new Matrix(pRows, pColumns);
+            for(int row = 0; row < pRows; row++)
+            {
+                for(int col = 0; col < pColumns; col++)
+                {
+                    rnd[row, col] = Globals.rng.NextDouble() * (pMax - pMin) + pMin;
+                }
+            }
+            return rnd;
+        }
+
+        public bool IsVector()
+        {
+            if (Rows == 1 || Columns == 1) return true;
+            return false;
+        }
+
+        public double[] ToPackedArray()
+        {
+            double[] result = new double[Rows*Columns];
+            for(int row = 0; row < Rows; row++)
+            {
+                for(int col = 0; col < Columns; col++)
+                {
+                    result[row * Columns + col] = this[row, col];
+                }
+            }
+            return result;
+        }
+
+        public double DotProduct(Matrix m1)
+        {
+            if(!this.IsVector() || !m1.IsVector())
+            {
+                throw new DotProductNotPossibleException("To take the dot product, both matrixes must be vectors.");
+            }
+
+            double result = 0;
+            double[] aArray = this.ToPackedArray();
+            double[] bArray = m1.ToPackedArray();
+            if(aArray.Length != bArray.Length)
+            {
+                throw new DotProductNotPossibleException("To take the dot product, both matrixes must be of the same length.");
+            }
+            int length = aArray.Length;
+            for(int i = 0; i < length; i++)
+            {
+                result += aArray[i] * bArray[i];
+            }
+            return result;
+        }
+
+        public Matrix GetCol(int col)
+        {
+            Matrix result = new Matrix(Rows, 1);
+            for (int row = 0; row < Rows; row++)
+            {
+                result[row, 0] = this[row, col];
+            }
+            return result;
+        }
+
+        public Matrix GetRow(int row)
+        {
+            Matrix result = new Matrix(1, Columns);
+            for(int col = 0; col < Columns; col++)
+            {
+                result[0, col] = this[row, col];
+            }
+            return result;
+        }
         public double this[int i, int j]
         {
             get { return _matrix[i, j]; }

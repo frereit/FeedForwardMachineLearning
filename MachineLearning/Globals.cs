@@ -8,6 +8,6 @@ namespace MachineLearning
 {
     class Globals
     {
-        public static Graph DefaultGraph;
+        public static Random rng = new Random();
     }
 }
