@@ -44,7 +44,7 @@
     <Compile Include="Exceptions.cs" />
     <Compile Include="FeedForwardLayer.cs" />
     <Compile Include="Globals.cs" />
-    <Compile Include="IActivationFunction.cs" />
+    <Compile Include="ActivationFunctions.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
