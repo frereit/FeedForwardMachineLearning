@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MachineLearning
 {
-    public class Class1
+    class Globals
     {
+        public static Graph DefaultGraph;
     }
 }
