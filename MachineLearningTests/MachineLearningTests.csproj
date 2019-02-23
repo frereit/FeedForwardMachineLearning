@@ -56,8 +56,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="FeedForwardLayerTests.cs" />
-    <Compile Include="MatrixTests.cs" />
+    <Compile Include="FeedForward\FeedForwardLayerTests.cs" />
+    <Compile Include="FeedForward\FeedForwardNetworkTests.cs" />
+    <Compile Include="MatrixMath\MatrixTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +70,7 @@
       <Name>MachineLearning</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

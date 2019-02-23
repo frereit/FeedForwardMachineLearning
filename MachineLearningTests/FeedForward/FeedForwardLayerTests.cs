@@ -1,12 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MachineLearning;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MachineLearning.FeedForward;
+using MachineLearning.MatrixMath;
 
-namespace MachineLearning.Tests
+namespace MachineLearning.FeedForward.Tests
 {
     [TestClass()]
     public class FeedForwardLayerTests
@@ -21,8 +18,8 @@ namespace MachineLearning.Tests
             });
 
             FeedForwardLayer inputLayer = new FeedForwardLayer(inputMatrix00);
-            FeedForwardLayer hiddenLayer = new FeedForwardLayer(inputLayer, 2, 2, new ThresholdActivation(0));
-            FeedForwardLayer outputLayer = new FeedForwardLayer(hiddenLayer, 2, 1, new ThresholdActivation(0));
+            FeedForwardLayer hiddenLayer = new FeedForwardLayer(inputLayer, 2, new BinaryStepActivation());
+            FeedForwardLayer outputLayer = new FeedForwardLayer(hiddenLayer, 1, new BinaryStepActivation());
             hiddenLayer.Weights = new Matrix(new double[,]
             {
                 {1.0, 1.0 },

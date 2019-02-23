@@ -1,7 +1,8 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections;
 
-namespace MachineLearning
+namespace MachineLearning.MatrixMath
 {
     public class Matrix
     {
@@ -38,7 +39,7 @@ namespace MachineLearning
         {
             if(m1.Rows != m2.Rows || m1.Columns != m2.Columns)
             {
-                throw (new MatrixAdditionNotPossibleException("Matrix dimensions are not indentical: Matrix1: " 
+                throw (new MatrixAdditionNotPossibleException("Matrix dimensions are not identical: Matrix1: " 
                                                                 + m1.Rows + "x" + m1.Columns + ". Matrix2: " 
                                                                 + m2.Rows + "x" + m2.Columns + "."));
             }
@@ -80,7 +81,7 @@ namespace MachineLearning
         {
             if(m1.Columns != m2.Rows)
             {
-                throw (new DotProductNotPossibleException("Column Count of Matrix 1 (" 
+                throw (new MatrixMultiplicationNotPossibleException("Column Count of Matrix 1 (" 
                                                             + m1.Columns + ") does not match up with Row Count of Matrix 2 (" 
                                                             + m2.Rows + ")."));
             }
@@ -145,6 +146,19 @@ namespace MachineLearning
             return true;
         }
 
+        public static Matrix Ones(int pRows, int pColumns)
+        {
+            Matrix ones = new Matrix(pRows, pColumns);
+            for(int row = 0; row < pRows; row++)
+            {
+                for(int col = 0; col < pColumns; col++)
+                {
+                    ones[pRows, pColumns] = 1.0;
+                }
+            }
+            return ones;
+        }
+
         public static Matrix Identitiy(int pSize)
         {
             Matrix identity = new Matrix(pSize, pSize);
@@ -198,16 +212,16 @@ namespace MachineLearning
             return result;
         }
 
-        public double DotProduct(Matrix m1)
+        public static double DotProduct(Matrix pMatrix1, Matrix pMatrix2)
         {
-            if(!this.IsVector() || !m1.IsVector())
+            if(!pMatrix2.IsVector() || !pMatrix1.IsVector())
             {
                 throw new DotProductNotPossibleException("To take the dot product, both matrixes must be vectors.");
             }
 
             double result = 0;
-            double[] aArray = this.ToPackedArray();
-            double[] bArray = m1.ToPackedArray();
+            double[] aArray = pMatrix1.ToPackedArray();
+            double[] bArray = pMatrix2.ToPackedArray();
             if(aArray.Length != bArray.Length)
             {
                 throw new DotProductNotPossibleException("To take the dot product, both matrixes must be of the same length.");
@@ -217,6 +231,20 @@ namespace MachineLearning
             {
                 result += aArray[i] * bArray[i];
             }
+            return result;
+        }
+
+        public static Matrix HadamardProduct(Matrix pMatrix1, Matrix pMatrix2)
+        {
+            Matrix result = new Matrix(pMatrix1.Rows, pMatrix1.Columns);
+            for (int row = 0; row < result.Rows; row++)
+            {
+                for (int col = 0; col < result.Columns; col++)
+                {
+                    result[row, col] = pMatrix1[row, col] * pMatrix2[row, col];
+                }
+            }
+
             return result;
         }
 

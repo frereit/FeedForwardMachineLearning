@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MachineLearning;
+using MachineLearning.MatrixMath;
 using System;
 using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MachineLearning.Tests
+namespace MachineLearning.MatrixMath.Tests
 {
     [TestClass()]
     public class MatrixTests
@@ -74,7 +74,7 @@ namespace MachineLearning.Tests
                 {7.0 },
                 {8.0 },
             });
-            double dotProductActual = m1.DotProduct(m2);
+            double dotProductActual = Matrix.DotProduct(m1, m2);
             double dotProductExpected = 70;
             Assert.AreEqual(dotProductExpected, dotProductActual);
         }
@@ -108,7 +108,29 @@ namespace MachineLearning.Tests
                 {139.0, 154.0},
             });
             Assert.IsTrue(dotProduct.Equals(dotProductActual));
-            Assert.ThrowsException<DotProductNotPossibleException>(delegate () { Matrix _ = m1 * m3; });
+            Assert.ThrowsException<MatrixMultiplicationNotPossibleException>(delegate () { Matrix _ = m1 * m3; });
+        }
+
+        [TestMethod()]
+        public void MatrixHadamardProductTest()
+        {
+            Matrix m1 = new Matrix(new[,]
+            {
+                {1.0},
+                {4.0},
+            });
+            Matrix m2 = new Matrix(new[,]
+            {
+                { 7.0},
+                { 9.0},
+            });
+            Matrix actual = new Matrix(new[,]
+            {
+                {1*7.0},
+                {9*4.0}
+            });
+            Matrix hadamardProduct = Matrix.HadamardProduct(m1, m2);
+            Assert.IsTrue(hadamardProduct.Equals(actual));
         }
 
         [TestMethod()]

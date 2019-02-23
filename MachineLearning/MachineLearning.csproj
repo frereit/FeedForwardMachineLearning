@@ -42,10 +42,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions.cs" />
-    <Compile Include="FeedForwardLayer.cs" />
+    <Compile Include="FeedForward\CostFunction.cs" />
+    <Compile Include="FeedForward\FeedForwardLayer.cs" />
+    <Compile Include="FeedForward\FeedForwardNetwork.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="ActivationFunctions.cs" />
-    <Compile Include="Matrix.cs" />
+    <Compile Include="MatrixMath\Matrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
